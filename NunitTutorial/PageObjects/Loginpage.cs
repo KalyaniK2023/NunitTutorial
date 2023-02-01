@@ -36,18 +36,24 @@ namespace NunitTutorial.PageObjects
 
         public HomePage LoginToApplication(string testName)
         {
-           
+            try
+            {
                 var readData = new ReadDataExcel("NunitTutorial", "Login");
                 //var dt = readData.GetTestData(testName);
                 List<Login> loginlist = readData.GetTestData(testName);
                 string text = loginlist[0].UserName;
                 CommonAction.type(UserName, text);
-                string text1 = loginlist[0].Password;
+                string text1 = "dfdfa";
+                // loginlist[0].Password;
                 CommonAction.type(Password, text1);
                 CommonAction.JSClick(driver, SignInBtn);
                 HomePage homePage = new HomePage();
                 return homePage;
-            
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
            
 
 

@@ -120,7 +120,7 @@ namespace NunitTutorial.Action
             bool flag = false;
             
 
-            string? text = (string) driver?.Url;
+            string text =  driver.Url;
                 
             if (flag)
             {

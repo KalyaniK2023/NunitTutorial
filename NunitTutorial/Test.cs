@@ -8,6 +8,7 @@ using NunitTutorial.BaseClass;
 using NunitTutorial.Helper;
 using NunitTutorial.PageObjects;
 
+
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using System.Collections;
@@ -25,13 +26,10 @@ namespace NunitTutorial
         ExtentReports extent = null;
         ExtentTest test = null;
         private HomePage homePage;
+
+        
         private static readonly Lazy<ExtentReports> _lazy = new Lazy<ExtentReports>(() => new ExtentReports());
         public static ExtentReports Instance { get { return _lazy.Value; } }
-
-        public Tests() 
-        {
-        }
-
         [OneTimeSetUp]
 
         public void ExtentStart()
@@ -40,10 +38,10 @@ namespace NunitTutorial
             //var htmlReporter = new ExtentHtmlReporter(Utilities.ExtentReportFilePath());
             var logDirectoryPath = Path.Combine(Utilities.ExtentReportFilePath(), "Logs", DateTime.Today.Year.ToString(), DateTime.Today.Month.ToString(), DateTime.Today.Day.ToString());
 
-            var logFilePath = Path.Combine(logDirectoryPath, DateTime.Now.ToString("yyyyMMddHHmmss") + ". html");
+            var logFilePath = Path.Combine(logDirectoryPath, DateTime.Now.ToString("yyyyMMddHHmmss") + "MyReport. html");
             var htmlReporter = new ExtentHtmlReporter(logFilePath);
 
-            //var extentReportConfigPath = Path.Combine(Utilities.ExtentReportFilePath(), "extent-config.xml");
+          //  var extentReportConfigPath = Path.Combine(Utilities.ExtentReportFilePath(), "extent-config.xml");
             //htmlReporter.LoadConfig(extentReportConfigPath);
 
             Instance.AttachReporter(htmlReporter);
@@ -59,6 +57,11 @@ namespace NunitTutorial
         {
             extent.Flush();
         }
+        public Tests() 
+        {
+        }
+
+        
 
         [Test, Category("UnitTest")]
         
@@ -70,18 +73,19 @@ namespace NunitTutorial
             {
                 test = extent.CreateTest("Login").Info("Test Started");
                 test.Log(Status.Info, "Chrome Started");
-                Utilities.NavigateToBaseUrl(driver, "https://nightly-www.savvasrealizedev.com/community");
+                
                 test.Log(Status.Info, "URL lanuched");
                 var loginPage = new Loginpage(driver);
                 test.Log(Status.Info, "Email and Password Entered");
                 homePage = loginPage.LoginToApplication("Sheet1");
                 test.Log(Status.Info, "Verifying if user is able to login");
-                test.Log(Status.Pass, "Successfully Entered Email and Passord");
-                
 
-                //string actualURL = homePage.getCurrentURL();
+
+
+               // string actualURL = driver.Url;
                 //string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
                 //Assert.AreEqual(expectedURL, actualURL);
+                test.Log(Status.Pass, "Successfully Entered Email and Passord");
                 //test.Log(Status.Pass,"Login is Sucess");
 
             }
