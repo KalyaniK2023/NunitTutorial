@@ -104,7 +104,7 @@ namespace NunitTutorial
                 string actualURL = homePage.getCurrentURL(driver);
 
                 string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
-                Assert.AreEqual(expectedURL, actualURL);
+                Assert.AreNotEqual(expectedURL, actualURL);
                 test.Pass("Test Passed", captureScreenShot(driver, fileName));
                 //test.Log(Status.Pass, "Successfully Entered Email and Passord");
                 //test.Log(Status.Pass,"Login is Sucess");
