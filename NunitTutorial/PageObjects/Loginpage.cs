@@ -45,9 +45,9 @@ namespace NunitTutorial.PageObjects
                 CommonAction.type(UserName, text);
                 string text1 = loginlist[0].Password;
                 CommonAction.type(Password, text1);
-                CommonAction.ExplicitWait(driver,SignInBtn,10);
+              //  CommonAction.ExplicitWait(driver,SignInBtn,10);
                
-              //CommonAction.JSClick(driver, SignInBtn);
+              CommonAction.JSClick(driver, SignInBtn);
                HomePage homePage = new HomePage();
               return homePage;
             }
