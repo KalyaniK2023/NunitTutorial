@@ -156,7 +156,7 @@ namespace NunitTutorial.Action
                 if (element.Enabled)
                 {
 
-                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
                     wait.Until(ExpectedConditions.ElementToBeClickable(element));
                 
                     IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;

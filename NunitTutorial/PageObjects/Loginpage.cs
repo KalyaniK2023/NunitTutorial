@@ -34,7 +34,7 @@ namespace NunitTutorial.PageObjects
         [FindsBy(How = How.XPath, Using = "//button[@id='signInBtn']")]
         public IWebElement SignInBtn { get; set; }
 
-        public void LoginToApplication(string testName)
+        public HomePage LoginToApplication(string testName)
         {
             try
             {
@@ -45,11 +45,11 @@ namespace NunitTutorial.PageObjects
                 CommonAction.type(UserName, text);
                 string text1 = loginlist[0].Password;
                 CommonAction.type(Password, text1);
-                //CommonAction.ExplicitWait(driver,SignInBtn,30);
+                CommonAction.ExplicitWait(driver,SignInBtn,10);
                
               //CommonAction.JSClick(driver, SignInBtn);
-               // HomePage homePage = new HomePage();
-              // return homePage;
+               HomePage homePage = new HomePage();
+              return homePage;
             }
             catch(Exception e)
             {

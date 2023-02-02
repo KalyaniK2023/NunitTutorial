@@ -28,35 +28,19 @@ namespace NunitTutorial.BaseClass
         public BaseTest()
         { }
 
-        [OneTimeSetUp]
-
-        public void ExtentStart()
-        {
-
-
-            string workingDirectory = Environment.CurrentDirectory;
-            string projectDirectory = Directory.GetParent(workingDirectory).FullName;
-            //  .Parent.Parent.FullName;
-            String reportPath = projectDirectory + "//index.html";
-            var htmlReporter = new ExtentHtmlReporter(reportPath);
-            extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
-            extent.AddSystemInfo("Host Name", "Local host");
-            extent.AddSystemInfo("Environment", "QA");
-            extent.AddSystemInfo("Username", "Kalyani");
-        }
+        
 
             [SetUp]
         public void Open()
         {
             // ExtentManager.ExtentStart();
-            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
+            //test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
             var driver = GetDriver("chrome");
             //Delete all the cookies
             driver.Manage().Window.Maximize();
             driver.Manage().Cookies.DeleteAllCookies();
             //PageLoad TimeOuts
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             
             // driver.Navigate().GoToUrl("https://nightly-www.savvasrealizedev.com/community");
@@ -96,7 +80,7 @@ namespace NunitTutorial.BaseClass
         public void AfterTest()
 
         {
-             var status = TestContext.CurrentContext.Result.Outcome.Status;
+            /* var status = TestContext.CurrentContext.Result.Outcome.Status;
              var stackTrace = TestContext.CurrentContext.Result.StackTrace;
 
 
@@ -114,7 +98,7 @@ namespace NunitTutorial.BaseClass
              else if (status == TestStatus.Passed)
              {
 
-             }
+             }*/
 
             
 
@@ -141,11 +125,7 @@ namespace NunitTutorial.BaseClass
 
 
             }
-        [OneTimeTearDown]
-        public void ExtentClosed()
-        {
-            extent.Flush();
-        }
+       
 
 
         }
