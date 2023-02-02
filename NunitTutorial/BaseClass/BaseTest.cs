@@ -28,16 +28,35 @@ namespace NunitTutorial.BaseClass
         public BaseTest()
         { }
 
-        [SetUp]
+        [OneTimeSetUp]
+
+        public void ExtentStart()
+        {
+
+
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).FullName;
+            //  .Parent.Parent.FullName;
+            String reportPath = projectDirectory + "//index.html";
+            var htmlReporter = new ExtentHtmlReporter(reportPath);
+            extent = new ExtentReports();
+            extent.AttachReporter(htmlReporter);
+            extent.AddSystemInfo("Host Name", "Local host");
+            extent.AddSystemInfo("Environment", "QA");
+            extent.AddSystemInfo("Username", "Kalyani");
+        }
+
+            [SetUp]
         public void Open()
         {
-           // ExtentManager.ExtentStart();
+            // ExtentManager.ExtentStart();
+            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
             var driver = GetDriver("chrome");
             //Delete all the cookies
             driver.Manage().Window.Maximize();
             driver.Manage().Cookies.DeleteAllCookies();
             //PageLoad TimeOuts
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             
             // driver.Navigate().GoToUrl("https://nightly-www.savvasrealizedev.com/community");
@@ -77,13 +96,13 @@ namespace NunitTutorial.BaseClass
         public void AfterTest()
 
         {
-           /*  var status = TestContext.CurrentContext.Result.Outcome.Status;
+             var status = TestContext.CurrentContext.Result.Outcome.Status;
              var stackTrace = TestContext.CurrentContext.Result.StackTrace;
 
 
 
              DateTime time = DateTime.Now;
-             string fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
+             String fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
 
              if (status == TestStatus.Failed)
              {
@@ -95,15 +114,16 @@ namespace NunitTutorial.BaseClass
              else if (status == TestStatus.Passed)
              {
 
-             }*/
-           
+             }
 
+            
 
                 driver.Quit();
             //ExtentManager.ExtentClose();
-            }
+            
+        }
 
-            public MediaEntityModelProvider captureScreenShot(IWebDriver driver, string? screenShotName)
+            public MediaEntityModelProvider captureScreenShot(IWebDriver driver, String screenShotName)
 
             {
                 //var directoryPath = Path.Combine(extentreportPath, "Screenshots", DateTime.Today.Year.ToString(), DateTime.Today.Month.ToString(), DateTime.Today.Day.ToString());
@@ -121,8 +141,11 @@ namespace NunitTutorial.BaseClass
 
 
             }
-
-
+        [OneTimeTearDown]
+        public void ExtentClosed()
+        {
+            extent.Flush();
+        }
 
 
         }

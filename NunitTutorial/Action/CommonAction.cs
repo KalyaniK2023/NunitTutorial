@@ -1,16 +1,20 @@
 ﻿using NunitTutorial.Model;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace NunitTutorial.Action
 {
     public class CommonAction
     {
-       // IWebDriver driver;
+        // IWebDriver driver;
         public static bool type(IWebElement ele, String text)
         {
             bool flag = false;
@@ -87,10 +91,15 @@ namespace NunitTutorial.Action
             bool flag = false;
             try
             {
+                if (signInBtn.Enabled)
+                {
+                    //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+                    // wait.Until(IWebDriver-> (IJavaScriptExecutor).executeScript("return document.readyState").equals("complete"));
+                    IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+                    executor.ExecuteScript("arguments[0].click();", signInBtn);
+                    // driver.executeAsyncScript("arguments[0].click();", element);
 
-                IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
-                executor.ExecuteScript("arguments[0].click();", signInBtn);
-                // driver.executeAsyncScript("arguments[0].click();", element);
+                }
 
                 flag = true;
 
@@ -114,7 +123,52 @@ namespace NunitTutorial.Action
             }
             return flag;
         }
+        public static void WaitUntilButtonToBeClickBle(IWebDriver driver, IWebElement element)
+        {
+            try
+            {
+                Thread.Sleep(2000);
+                DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(driver);
+                fluentWait.Timeout = TimeSpan.FromMinutes(3);
+                fluentWait.PollingInterval = TimeSpan.FromMinutes(3);
+                fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+                fluentWait.Message = "Element to be searched not found";
+                fluentWait.Until(ExpectedConditions.ElementToBeClickable(element));
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
 
+                
+                
+                                element.Click();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("some error:" + e.Message);
+            }
+
+        }
+
+        
+        public static void ExplicitWait(IWebDriver driver, IWebElement element,int timeout)
+        {
+            
+            try
+            {
+                if (element.Enabled)
+                {
+
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+                    wait.Until(ExpectedConditions.ElementToBeClickable(element));
+                
+                    IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+                    executor.ExecuteScript("arguments[0].click();", element);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("some error:" + e.Message);
+            }
+
+        }
         public static string getURL(IWebDriver driver)
         {
             bool flag = false;

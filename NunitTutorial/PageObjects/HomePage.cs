@@ -11,10 +11,10 @@ namespace NunitTutorial.PageObjects
 {
     public class HomePage
     {
-        IWebDriver driver;
-        public string getCurrentURL()
+      //  IWebDriver driver;
+        public string getCurrentURL(IWebDriver driver)
         {
-            driver= new ChromeDriver();
+            
             string homePageURL = CommonAction.getURL(driver);
             return homePageURL;
         }
