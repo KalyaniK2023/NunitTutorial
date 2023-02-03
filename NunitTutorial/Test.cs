@@ -23,33 +23,11 @@ namespace NunitTutorial
     {
 
         string filename = "C:\\Users\\DELL\\source\\repos\\NunitTutorial\\NunitTutorial\\Asset\\Login.xlsx";
-        ExtentReports extent = null;
-        ExtentTest test = null;
+        //ExtentReports extent ;
+       // ExtentTest test ;
         private HomePage homePage;
 
-        [OneTimeSetUp]
-
-        public void ExtentStart()
-        {
-
-
-            string workingDirectory = Environment.CurrentDirectory;
-            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-            
-            //  .Parent.Parent.FullName;
-            String reportPath = projectDirectory +"//index.html";
-            var htmlReporter = new ExtentHtmlReporter(reportPath);
-            extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
-            extent.AddSystemInfo("Host Name", "Local host");
-            extent.AddSystemInfo("Environment", "QA");
-            extent.AddSystemInfo("Username", "Kalyani");
-        }
-        [OneTimeTearDown]
-        public void ExtentClosed()
-        {
-            extent.Flush();
-        }
+       
         // private static readonly Lazy<ExtentReports> _lazy = new Lazy<ExtentReports>(() => new ExtentReports());
         //  public static ExtentReports Instance { get { return _lazy.Value; } }
 
@@ -89,7 +67,7 @@ namespace NunitTutorial
             try
             {
 
-                test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
+               // test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
                 //test = extent.CreateTest("Login").Info("Test Started");
                 // test.Log(Status.Info, "Chrome Started");
 

@@ -27,21 +27,39 @@ namespace NunitTutorial.BaseClass
         }
         public BaseTest()
         { }
+        [OneTimeSetUp]
 
-        
+        public void ExtentStart()
+        {
 
-            [SetUp]
+
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+
+            //  .Parent.Parent.FullName;
+            String reportPath = projectDirectory + "//index.html";
+            var htmlReporter = new ExtentHtmlReporter(reportPath);
+            extent = new ExtentReports();
+            extent.AttachReporter(htmlReporter);
+            extent.AddSystemInfo("Host Name", "Local host");
+            extent.AddSystemInfo("Environment", "QA");
+            extent.AddSystemInfo("Username", "Kalyani");
+        }
+       
+
+
+        [SetUp]
         public void Open()
         {
             // ExtentManager.ExtentStart();
-            //test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
+            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
             var driver = GetDriver("chrome");
             //Delete all the cookies
             driver.Manage().Window.Maximize();
             driver.Manage().Cookies.DeleteAllCookies();
             //PageLoad TimeOuts
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(20);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             
             // driver.Navigate().GoToUrl("https://nightly-www.savvasrealizedev.com/community");
 
@@ -104,10 +122,15 @@ namespace NunitTutorial.BaseClass
 
                 driver.Quit();
             //ExtentManager.ExtentClose();
-            
+
+        }
+        [OneTimeTearDown]
+        public void ExtentClosed()
+        {
+            extent.Flush();
         }
 
-            public MediaEntityModelProvider captureScreenShot(IWebDriver driver, String screenShotName)
+        public MediaEntityModelProvider captureScreenShot(IWebDriver driver, String screenShotName)
 
             {
                 //var directoryPath = Path.Combine(extentreportPath, "Screenshots", DateTime.Today.Year.ToString(), DateTime.Today.Month.ToString(), DateTime.Today.Day.ToString());
