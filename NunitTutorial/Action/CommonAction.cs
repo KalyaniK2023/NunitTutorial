@@ -100,7 +100,7 @@ namespace NunitTutorial.Action
                     // driver.executeAsyncScript("arguments[0].click();", element);
 
                 }
-
+               ;
                 flag = true;
 
             }

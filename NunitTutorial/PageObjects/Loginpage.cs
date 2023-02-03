@@ -47,8 +47,10 @@ namespace NunitTutorial.PageObjects
                 CommonAction.type(Password, text1);
                 //  CommonAction.ExplicitWait(driver,SignInBtn,10);
 
-                SignInBtn.Click();
-              //CommonAction.JSClick(driver, SignInBtn);
+                //SignInBtn.Click();
+              CommonAction.JSClick(driver, SignInBtn);
+                //Thread.Sleep(20000);
+               driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
                HomePage homePage = new HomePage();
               return homePage;
             }
