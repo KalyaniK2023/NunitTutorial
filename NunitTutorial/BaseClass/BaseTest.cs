@@ -120,7 +120,7 @@ namespace NunitTutorial.BaseClass
 
             
 
-              //  driver.Quit();
+               driver.Quit();
             //ExtentManager.ExtentClose();
 
         }

@@ -50,9 +50,10 @@ namespace NunitTutorial.PageObjects
                 //SignInBtn.Click();
               CommonAction.JSClick(driver, SignInBtn);
                 //Thread.Sleep(20000);
-               driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+               
                HomePage homePage = new HomePage();
-              return homePage;
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                return homePage;
             }
             catch(Exception e)
             {
