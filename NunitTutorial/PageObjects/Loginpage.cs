@@ -13,7 +13,8 @@ namespace NunitTutorial.PageObjects
     public class Loginpage
     {
         IWebDriver driver;
-       
+        int timeout;
+           
         List<Login> loginlist = new List<Login>();
        Login login=new Login();
     
@@ -49,10 +50,12 @@ namespace NunitTutorial.PageObjects
 
                 //SignInBtn.Click();
               CommonAction.JSClick(driver, SignInBtn);
-                //Thread.Sleep(20000);
-               
-               HomePage homePage = new HomePage();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                Thread.Sleep(20000);
+                //CommonAction.ImplicitWait(driver, timeout);
+
+                HomePage homePage = new HomePage(driver);
+              // CommonAction.ImplicitWait(driver,timeout);
+               // driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
                 return homePage;
             }
             catch(Exception e)

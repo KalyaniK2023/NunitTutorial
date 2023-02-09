@@ -67,8 +67,7 @@ namespace NunitTutorial
             try
             {
 
-               // test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
-                //test = extent.CreateTest("Login").Info("Test Started");
+              
                  test.Log(Status.Info, "Chrome Started");
 
                  test.Log(Status.Info, "URL lanuched");
@@ -82,13 +81,18 @@ namespace NunitTutorial
                 string actualURL = homePage.getCurrentURL(driver);
 
                 string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
-                Assert.AreNotEqual(expectedURL, actualURL);
+                Assert.AreEqual(expectedURL, actualURL);
                 test.Pass("Test Passed", captureScreenShot(driver, fileName));
+                //var HomePage = new HomePage(driver);
+                bool flag = homePage.ValidateHelpIcon();
+                Assert.That(flag, Is.EqualTo(true));
+                test.Pass("Test Passed", captureScreenShot(driver, fileName));
+
                 //test.Log(Status.Pass, "Successfully Entered Email and Passord");
                 //test.Log(Status.Pass,"Login is Sucess");
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 test.Fail("Test failed", captureScreenShot(driver, fileName));
             }

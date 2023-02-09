@@ -59,7 +59,7 @@ namespace NunitTutorial.BaseClass
             driver.Manage().Cookies.DeleteAllCookies();
             //PageLoad TimeOuts
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(20);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             
             // driver.Navigate().GoToUrl("https://nightly-www.savvasrealizedev.com/community");
 
@@ -120,7 +120,7 @@ namespace NunitTutorial.BaseClass
 
             
 
-               driver.Quit();
+              driver.Quit();
             //ExtentManager.ExtentClose();
 
         }

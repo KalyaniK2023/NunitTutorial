@@ -1,5 +1,6 @@
 ﻿using NunitTutorial.Model;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
@@ -15,6 +16,8 @@ namespace NunitTutorial.Action
     public class CommonAction
     {
         // IWebDriver driver;
+        public static int timeOut = 20;
+        public IWebElement element;
         public static bool type(IWebElement ele, String text)
         {
             bool flag = false;
@@ -91,16 +94,19 @@ namespace NunitTutorial.Action
             bool flag = false;
             try
             {
+
+
+
                 if (signInBtn.Enabled)
                 {
                     //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
                     // wait.Until(IWebDriver-> (IJavaScriptExecutor).executeScript("return document.readyState").equals("complete"));
                     IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
                     executor.ExecuteScript("arguments[0].click();", signInBtn);
+                    // CommonAction.ImplicitWait(driver, timeOut);
                     // driver.executeAsyncScript("arguments[0].click();", element);
 
                 }
-               ;
                 flag = true;
 
             }
@@ -134,11 +140,7 @@ namespace NunitTutorial.Action
                 fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
                 fluentWait.Message = "Element to be searched not found";
                 fluentWait.Until(ExpectedConditions.ElementToBeClickable(element));
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-
-                
-                
-                                element.Click();
+                element.Click();
             }
             catch (Exception e)
             {
@@ -147,41 +149,105 @@ namespace NunitTutorial.Action
 
         }
 
-        
-        public static void ExplicitWait(IWebDriver driver, IWebElement element,int timeout)
-        {
-            
-            try
-            {
-                if (element.Enabled)
-                {
 
-                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                    wait.Until(ExpectedConditions.ElementToBeClickable(element));
-                
-                    IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
-                    executor.ExecuteScript("arguments[0].click();", element);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("some error:" + e.Message);
-            }
+        /* public static void ExplicitWait(IWebDriver driver, IWebElement element,int timeout)
+         {
 
-        }
+             try
+             {
+                 if (element.Enabled)
+                 {
+
+                     WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                     wait.Until(ExpectedConditions.ElementToBeClickable(element));
+
+                     IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+                     executor.ExecuteScript("arguments[0].click();", element);
+                 }
+             }
+             catch (Exception e)
+             {
+                 Debug.WriteLine("some error:" + e.Message);
+             }
+
+         }*/
         public static string getURL(IWebDriver driver)
         {
             bool flag = false;
-            
 
-            string text =  driver.Url;
-                
+
+            string text = driver.Url;
+
             if (flag)
             {
                 Console.WriteLine("Current URL is: \"" + text + "\"");
             }
+
             return text;
+        }
+        public static void ImplicitWait(IWebDriver driver, int timeOut)
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+        }
+
+        public static void ExplicitWait(IWebDriver driver, IWebElement element, int timeOut)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(element));
+
+        }
+        public static void Elementexist(IWebDriver driver, IWebElement element, int timeOut)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists((By)element));
+
+        }
+        public static void ElementSelected(IWebDriver driver, IWebElement element, int timeOut)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeSelected(element));
+
+        }
+        public static void ElementStaleness(IWebDriver driver, IWebElement element, int timeOut)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.StalenessOf(element));
+
+        }
+
+        public static void pageLoadTimeOut(WebDriver driver, int timeOut)
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+        }
+
+        public static ISearchContext GetShadowDom(IWebElement element, IWebDriver driver)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            ISearchContext ele = (ISearchContext)js.ExecuteScript("return arguments[0].shadowRoot", element);
+            return ele;
+
+
+
+        }
+
+        public static bool MouseOver(IWebDriver driver, IWebElement ele)
+        {
+            bool flag = false;
+            try
+            {
+                new Actions(driver).MoveToElement(ele).Build().Perform();
+                flag = true;
+                return flag;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
         }
     }
 
 }
+
+
+
