@@ -99,12 +99,10 @@ namespace NunitTutorial.Action
 
                 if (signInBtn.Enabled)
                 {
-                    //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-                    // wait.Until(IWebDriver-> (IJavaScriptExecutor).executeScript("return document.readyState").equals("complete"));
+                    
                     IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
                     executor.ExecuteScript("arguments[0].click();", signInBtn);
-                    // CommonAction.ImplicitWait(driver, timeOut);
-                    // driver.executeAsyncScript("arguments[0].click();", element);
+                    
 
                 }
                 flag = true;
@@ -196,12 +194,30 @@ namespace NunitTutorial.Action
             wait.Until(ExpectedConditions.ElementToBeClickable(element));
 
         }
-        public static void Elementexist(IWebDriver driver, IWebElement element, int timeOut)
+        public static bool ElementClickable(IWebDriver driver, IWebElement element, int timeOut)
         {
+            bool flag = false;
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists((By)element));
+            if (wait.Until(ExpectedConditions.ElementToBeClickable(element)) == null)
+            {
+                flag = true;
+            }
+            return flag;
 
         }
+        public static void ElementVisible(IWebDriver driver, IWebElement element, int timeOut)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible((By)element));
+
+        }
+        //public static void Elementexist(IWebDriver driver, IWebElement element, int timeOut)
+        //{
+        //    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        //    wait.Until(element.Displayed);
+
+        //}
+        
         public static void ElementSelected(IWebDriver driver, IWebElement element, int timeOut)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -215,7 +231,7 @@ namespace NunitTutorial.Action
 
         }
 
-        public static void pageLoadTimeOut(WebDriver driver, int timeOut)
+        public static void pageLoadTimeOut(IWebDriver driver, int timeOut)
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
         }

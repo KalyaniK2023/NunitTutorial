@@ -49,20 +49,21 @@ namespace NunitTutorial.Helper
             // adapter.TableMappings.Add("Table", "TestTable");
             adapter.Fill(ds,sheetName);
             var dt= ds.Tables["Sheet1"];
-            Login login = new Login();
+            Login login =new Login("","");
             List<Login> loginlist = new List<Login>();
-            for (int i = 0; i < dt.Rows.Count-1; i++)
+            for (int i = 0; i <= dt.Rows.Count-1; i++)
             {
                 login.UserName = dt.Rows[i][0].ToString();
                 login.Password = dt.Rows[i][1].ToString();
                 //login.URL = dt.Rows[i][2].ToString();
-                loginlist.Add(login);
+                loginlist.Add(new Login(login.UserName,login.Password));
             }
+
             return loginlist;
 
 
         }
-        public static List<Login> GetArrayData(System.Data.DataTable dt)
+     /*  public static List<Login> GetArrayData(System.Data.DataTable dt)
         {
             Login login=new Login();
             List<Login> loginlist=new List<Login>();
@@ -70,11 +71,11 @@ namespace NunitTutorial.Helper
             {
                 login.UserName = dt.Rows[i][0].ToString();
                 login.Password = dt.Rows[i][1].ToString();
-                login.URL = dt.Rows[i][2].ToString();
+                //login.URL = dt.Rows[i][2].ToString();
                 loginlist.Add(login);
             }
             return loginlist;
-        }
+        }*/
 
         }
 }

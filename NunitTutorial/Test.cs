@@ -6,6 +6,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using NUnit.Framework.Internal;
 using NunitTutorial.BaseClass;
 using NunitTutorial.Helper;
+using NunitTutorial.Model;
 using NunitTutorial.PageObjects;
 
 
@@ -26,28 +27,8 @@ namespace NunitTutorial
         //ExtentReports extent ;
        // ExtentTest test ;
         private HomePage homePage;
-
-       
-        // private static readonly Lazy<ExtentReports> _lazy = new Lazy<ExtentReports>(() => new ExtentReports());
-        //  public static ExtentReports Instance { get { return _lazy.Value; } }
-
-
-
-        /*   extent = new ExtentReports();
-           //var htmlReporter = new ExtentHtmlReporter(Utilities.ExtentReportFilePath());
-           var logDirectoryPath = Path.Combine(Utilities.ExtentReportFilePath(), "Logs", DateTime.Today.Year.ToString(), DateTime.Today.Month.ToString(), DateTime.Today.Day.ToString());
-
-           var logFilePath = Path.Combine(logDirectoryPath, DateTime.Now.ToString("yyyyMMddHHmmss") + "MyReport. html");
-           var htmlReporter = new ExtentHtmlReporter(logFilePath);
-
-         //  var extentReportConfigPath = Path.Combine(Utilities.ExtentReportFilePath(), "extent-config.xml");
-           //htmlReporter.LoadConfig(extentReportConfigPath);
-
-           Instance.AttachReporter(htmlReporter);
-           Instance.AddSystemInfo("Operting system", "Windows 10");
-           Instance.AddSystemInfo("Browser", "Chrome");   */
-        //@"C:\Users\DELL\source\repos\NunitTutorial\NunitTutorial\ExtentReports\NunitTutorial.html");
-        //extent.AttachReporter(htmlReporter);
+        private ClassesPage classesPage;
+        bool flag;
 
 
 
@@ -55,52 +36,141 @@ namespace NunitTutorial
         {
         }
 
-        
+        public static String getFileName()
+        {
+            DateTime time = DateTime.Now;
+            String fileName = "Login_Screenshot" + time.ToString("h_mm_ss") + ".png";
+            return fileName;
+        }
+
 
         [Test, Category("UnitTest")]
         
-        public void Login()
+        public void tc120RLZ32851()
         {
-             DateTime time = DateTime.Now;
-             String fileName = "Login_Screenshot" + time.ToString("h_mm_ss") + ".png";
+          
 
             try
             {
 
-              
-                 test.Log(Status.Info, "Chrome Started");
-
-                 test.Log(Status.Info, "URL lanuched");
+                test.Log(Status.Info, "Chrome Started");
+                test.Log(Status.Info, "URL lanuched");
                 var loginPage = new Loginpage(driver);
-                 test.Log(Status.Info, "Email and Password Entered");
-                homePage = loginPage.LoginToApplication("Sheet1");
-                 test.Log(Status.Info, "Verifying if user is able to login");
-
-
-
+                test.Log(Status.Info, "Email and Password Entered");
+                test.Log(Status.Info, "Email and Password Entered");
+                homePage = loginPage.Login_tc120RLZ32851("Sheet1", 0);
+                test.Log(Status.Info, "Verifying if user is able to login");
                 string actualURL = homePage.getCurrentURL(driver);
-
                 string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
                 Assert.AreEqual(expectedURL, actualURL);
-                test.Pass("Test Passed", captureScreenShot(driver, fileName));
-                //var HomePage = new HomePage(driver);
-                bool flag = homePage.ValidateHelpIcon();
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+                flag = homePage.Validate_tc120RLZ32851();
                 Assert.That(flag, Is.EqualTo(true));
-                test.Pass("Test Passed", captureScreenShot(driver, fileName));
-
-                //test.Log(Status.Pass, "Successfully Entered Email and Passord");
-                //test.Log(Status.Pass,"Login is Sucess");
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
 
             }
             catch (Exception e)
             {
-                test.Fail("Test failed", captureScreenShot(driver, fileName));
-            }
+                test.Fail("Test failed", captureScreenShot(driver, Tests.getFileName()));
+            }                                          
+        }
 
-           
-           // Assert.Fail("Entered Email and Password UnSuccessfully");       
-                      
-        }           
-            
+        [Test, Category("UnitTest")]
+
+        public void tc020RLZ33166()
+        {
+            try
+            {
+
+
+
+                test.Log(Status.Info, "Chrome Started");
+
+                test.Log(Status.Info, "URL lanuched");
+                var loginPage = new Loginpage(driver);
+                test.Log(Status.Info, "Email and Password Entered");
+                homePage = loginPage.Login_tc120RLZ32851("Sheet1",1);
+                test.Log(Status.Info, "Verifying if user is able to login");
+                string actualURL = homePage.getCurrentURL(driver);
+                string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
+                Assert.AreEqual(expectedURL, actualURL);
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+                flag = homePage.Validate_Teacher_tc020RLZ33166();
+                Assert.That(flag, Is.EqualTo(true));
+                 test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+                Utilities.NavigateToBaseUrl(driver, "https://nightly-www.savvasrealizedev.com/community");
+                test.Log(Status.Info, "Email and Password Entered");
+                homePage = loginPage.Login_tc120RLZ32851("Sheet1", 2);
+                flag =homePage.Validate_Student_tc020RLZ33166();
+                Assert.That(flag, Is.EqualTo(true));
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+            }
+            catch (Exception e)
+            {
+                test.Fail("Test failed", captureScreenShot(driver, Tests.getFileName()));
+            }
+        }
+
+        [Test, Category("UnitTest")]
+
+        public void tc110RLZ34301()
+        {
+            try
+            {
+                test.Log(Status.Info, "Chrome Started");
+
+                test.Log(Status.Info, "URL lanuched");
+                var loginPage = new Loginpage(driver);
+                test.Log(Status.Info, "Email and Password Entered");
+                homePage = loginPage.Login_tc120RLZ32851("Sheet1", 2);
+                test.Log(Status.Info, "Verifying if user is able to login");
+                string actualURL = homePage.getCurrentURL(driver);
+                string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
+                Assert.AreEqual(expectedURL, actualURL);
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+                bool flag = homePage.Validate_tc110RLZ34301();
+                Assert.That(flag, Is.EqualTo(true));
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+            }
+            catch (Exception e)
+            {
+                test.Fail("Test failed", captureScreenShot(driver, Tests.getFileName()));
+            }
+        }
+
+        [Test, Category("UnitTest")]
+
+        public void tc010RLZ36955()
+        {
+            try
+            {
+
+
+
+                test.Log(Status.Info, "Chrome Started");
+
+                test.Log(Status.Info, "URL lanuched");
+                var loginPage = new Loginpage(driver);
+                test.Log(Status.Info, "Email and Password Entered");
+                homePage = loginPage.Login_tc120RLZ32851("Sheet1", 0);
+                test.Log(Status.Info, "Verifying if user is able to login");
+                string actualURL = homePage.getCurrentURL(driver);
+                string expectedURL = "https://nightly-www.savvasrealizedev.com/dashboard/viewer";
+                Assert.AreEqual(expectedURL, actualURL);
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));                
+                 string Class_Title = homePage.Validate_tc010RLZ36955();
+                var classesPage = new ClassesPage(driver);
+                string Class_Assignment_Title=classesPage.Validate_tc010RLZ36955();
+                Assert.AreEqual(Class_Title, Class_Assignment_Title);
+                test.Pass("Test Passed", captureScreenShot(driver, Tests.getFileName()));
+
+            }
+            catch(Exception ex)
+            {
+                test.Fail("Test failed", captureScreenShot(driver, Tests.getFileName()));
+            }
+        }
+
+
     }
 }
